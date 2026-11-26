@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f7f5">
+  <meta name="description" content="SpendWise helps you track everyday expenses and understand your spending.">
+  <title>SpendWise – Personal Expense Tracker</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Main navigation">
+      <a class="brand" href="#overview" aria-label="SpendWise home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M4.5 8.25h15v10.5h-15z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+            <path d="M4.5 8.25 7 4.5h12.5v3.75M15.5 13.5h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="15.5" cy="13.5" r="1" fill="currentColor"/>
+          </svg>
+        </span>
+        <span class="brand-name">spend<span>wise</span></span>
+      </a>
+
+      <div class="sidebar-label">Workspace</div>
+      <nav class="navigation">
+        <a class="nav-link active" href="#overview" aria-current="page">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg>
+          <span>Overview</span>
+        </a>
+        <a class="nav-link" href="#expenses">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 3.75h7l4 4v12.5H7a2 2 0 0 1-2-2v-12.5a2 2 0 0 1 2-2Z"/><path d="M14 3.75v4h4M8.5 12h7M8.5 15.5h7"/></svg>
+          <span>Transactions</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-note">
+        <span class="note-icon" aria-hidden="true">✦</span>
+        <p class="note-title">Small steps, big picture.</p>
+        <p class="note-copy">Keep your spending in check, one day at a time.</p>
+      </div>
+
+      <div class="sidebar-footer">
+        <span class="avatar" aria-hidden="true">S</span>
+        <span class="profile-copy"><strong>My wallet</strong><small>Personal account</small></span>
+        <span class="profile-menu" aria-hidden="true">···</span>
+      </div>
+    </aside>
+
+    <main class="main-content" id="overview">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">PERSONAL FINANCE</p>
+          <h1>Your money, in focus.</h1>
+        </div>
+        <div class="topbar-date">
+          <span class="date-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M7.5 3.5v3M16.5 3.5v3M3.5 9.5h17"/></svg>
+          </span>
+          <span id="today-label"></span>
+        </div>
+      </header>
+
+      <div id="app-message" class="app-message" role="status" aria-live="polite" hidden></div>
+
+      <section class="summary-grid" aria-label="Spending summary">
+        <article class="summary-card total-card">
+          <div class="summary-top">
+            <span class="summary-label">Total spent</span>
+            <span class="summary-icon green-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 3.5v17M16.5 7.5c0-1.7-1.8-3-4.5-3S7.5 5.8 7.5 7.5 9 10 12 10s4.5 1.3 4.5 3-1.8 3.5-4.5 3.5-4.5-1.5-4.5-3.5"/></svg>
+            </span>
+          </div>
+          <p class="summary-value" id="total-spent">₹0.00</p>
+          <p class="summary-foot">Across all your transactions</p>
+        </article>
+
+        <article class="summary-card">
+          <div class="summary-top">
+            <span class="summary-label">Transactions</span>
+            <span class="summary-icon lavender-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M7 3.75h7l4 4v12.5H7a2 2 0 0 1-2-2v-12.5a2 2 0 0 1 2-2Z"/><path d="M14 3.75v4h4M8.5 12h7M8.5 15.5h4"/></svg>
+            </span>
+          </div>
+          <p class="summary-value" id="transaction-count">0</p>
+          <p class="summary-foot">Expenses recorded</p>
+        </article>
+
+        <article class="summary-card">
+          <div class="summary-top">
+            <span class="summary-label">Highest expense</span>
+            <span class="summary-icon peach-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M4 17.5 9 12l3.5 3.5L20 7.5M14.5 7.5H20V13"/></svg>
+            </span>
+          </div>
+          <p class="summary-value" id="highest-expense">₹0.00</p>
+          <p class="summary-foot" id="highest-description">Your biggest transaction</p>
+        </article>
+
+        <article class="summary-card">
+          <div class="summary-top">
+            <span class="summary-label">This month</span>
+            <span class="summary-icon blue-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M7.5 3.5v3M16.5 3.5v3M3.5 9.5h17M8 13h2M14 13h2M8 16.5h2"/></svg>
+            </span>
+          </div>
+          <p class="summary-value" id="month-total">₹0.00</p>
+          <p class="summary-foot" id="month-label">Spent in the current month</p>
+        </article>
+      </section>
+
+      <section class="content-grid" aria-label="Add and review expenses">
+        <section class="panel form-panel" aria-labelledby="form-heading">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">NEW ENTRY</p>
+              <h2 id="form-heading">Add an expense</h2>
+            </div>
+            <span class="heading-mark" aria-hidden="true">+</span>
+          </div>
+          <p class="panel-description">A little detail now makes your spending easier to understand later.</p>
+
+          <form id="expense-form" novalidate>
+            <div class="form-field">
+              <label for="amount">Amount</label>
+              <div class="input-with-prefix">
+                <span aria-hidden="true">₹</span>
+                <input id="amount" name="amount" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="0.00" required>
+              </div>
+              <small class="field-error" id="amount-error"></small>
+            </div>
+
+            <div class="form-field">
+              <label for="description">Description</label>
+              <input id="description" name="description" type="text" maxlength="80" placeholder="e.g. Lunch with friends" required>
+              <small class="field-error" id="description-error"></small>
+            </div>
+
+            <div class="form-row">
+              <div class="form-field">
+                <label for="category">Category</label>
+                <select id="category" name="category" required>
+                  <option value="">Choose one</option>
+                  <option value="Food">Food</option>
+                  <option value="Travel">Travel</option>
+                  <option value="Shopping">Shopping</option>
+                  <option value="Education">Education</option>
+                  <option value="Bills">Bills</option>
+                  <option value="Entertainment">Entertainment</option>
+                  <option value="Other">Other</option>
+                </select>
+                <small class="field-error" id="category-error"></small>
+              </div>
+              <div class="form-field">
+                <label for="date">Date</label>
+                <input id="date" name="date" type="date" required>
+                <small class="field-error" id="date-error"></small>
+              </div>
+            </div>
+
+            <button class="primary-button" type="submit">
+              <span aria-hidden="true">+</span>
+              Add expense
+            </button>
+          </form>
+        </section>
+
+        <section class="panel history-panel" id="expenses" aria-labelledby="history-heading">
+          <div class="history-heading">
+            <div class="panel-heading">
+              <div>
+                <p class="section-kicker">YOUR ACTIVITY</p>
+                <h2 id="history-heading">Recent expenses</h2>
+              </div>
+            </div>
+            <div class="history-controls">
+              <label class="sr-only" for="category-filter">Filter by category</label>
+              <select id="category-filter" aria-label="Filter by category">
+                <option value="all">All categories</option>
+                <option value="Food">Food</option>
+                <option value="Travel">Travel</option>
+                <option value="Shopping">Shopping</option>
+                <option value="Education">Education</option>
+                <option value="Bills">Bills</option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Other">Other</option>
+              </select>
+              <label class="sr-only" for="date-sort">Sort by date</label>
+              <select id="date-sort" aria-label="Sort by date">
+                <option value="newest">Newest first</option>
+                <option value="oldest">Oldest first</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="empty-state" class="empty-state">
+            <span class="empty-illustration" aria-hidden="true">
+              <svg viewBox="0 0 64 64" fill="none"><rect x="12" y="17" width="40" height="34" rx="7"/><path d="M18 17v-3a5 5 0 0 1 5-5h22a5 5 0 0 1 5 5v3M12 26h40M25 37h14"/></svg>
+            </span>
+            <h3>No expenses yet</h3>
+            <p>Add your first expense to start seeing where your money goes.</p>
+          </div>
+
+          <div class="table-wrap" id="table-wrap" hidden>
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Date</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Category</th>
+                  <th scope="col" class="amount-heading">Amount</th>
+                  <th scope="col"><span class="sr-only">Actions</span></th>
+                </tr>
+              </thead>
+              <tbody id="expense-list"></tbody>
+            </table>
+            <p id="filter-empty-state" class="filter-empty-state" hidden>No expenses match this category yet.</p>
+          </div>
+        </section>
+      </section>
+
+      <footer class="page-footer">
+        <span>Spend mindfully. Live fully.</span>
+        <span>SpendWise <span aria-hidden="true">·</span> Your personal finance space</span>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>
