@@ -127,6 +127,28 @@ function renderSummary() {
   }).format(now);
 }
 
+function renderCategory(category) {
+  const categoryEmojis = {
+    Food: "🍔",
+    Travel: "🚕",
+    Shopping: "🛍️",
+    Education: "📚",
+    Bills: "🧾",
+    Entertainment: "🎬",
+    Other: "📦"
+  };
+  const badge = document.createElement("span");
+  badge.className = "category-badge";
+  badge.dataset.category = category;
+
+  const emoji = document.createElement("span");
+  emoji.setAttribute("aria-hidden", "true");
+  emoji.textContent = categoryEmojis[category] || categoryEmojis.Other;
+  badge.append(emoji, document.createTextNode(category));
+
+  return badge;
+}
+
 function createExpenseRow(expense) {
   const row = document.createElement("tr");
 
@@ -140,14 +162,7 @@ function createExpenseRow(expense) {
 
   const categoryCell = document.createElement("td");
   categoryCell.className = "category-cell";
-  const badge = document.createElement("span");
-  badge.className = "category-badge";
-  badge.dataset.category = expense.category;
-  const dot = document.createElement("span");
-  dot.className = "category-dot";
-  dot.setAttribute("aria-hidden", "true");
-  badge.append(dot, document.createTextNode(expense.category));
-  categoryCell.append(badge);
+  categoryCell.append(renderCategory(expense.category));
 
   const amountCell = document.createElement("td");
   amountCell.className = "amount-cell";
