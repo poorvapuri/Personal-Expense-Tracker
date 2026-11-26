@@ -137,9 +137,21 @@ function renderCategory(category) {
     Entertainment: "🎬",
     Other: "📦"
   };
+  const categoryColors = {
+    Food: { background: "#fff0e8", text: "#a84322" },
+    Travel: { background: "#eaf3ff", text: "#285a91" },
+    Shopping: { background: "#f3edff", text: "#6841a5" },
+    Education: { background: "#e9f5ec", text: "#347346" },
+    Bills: { background: "#fff7db", text: "#85620d" },
+    Entertainment: { background: "#fdebf2", text: "#a03d68" },
+    Other: { background: "#eef0f2", text: "#58616a" }
+  };
+  const colors = categoryColors[category] || categoryColors.Other;
   const badge = document.createElement("span");
-  badge.className = "category-badge";
+  badge.className = `category-badge category-${category.toLowerCase()}`;
   badge.dataset.category = category;
+  badge.style.backgroundColor = colors.background;
+  badge.style.color = colors.text;
 
   const emoji = document.createElement("span");
   emoji.setAttribute("aria-hidden", "true");
